@@ -2456,6 +2456,8 @@ class Segment34View extends WatchUi.WatchFace {
             }
             var distFactor = propIsMetricDistance ? 0.001 : 0.000621371;
             val = formatDistanceByWidth((complicationType == 77 ? cachedRunDist7Days : cachedBikeDist7Days) * distFactor, width);
+        } else if(complicationType == 79) { // Local CGM Data
+            val = getLocalCgmData();
         }
 
         return val;
@@ -3178,14 +3180,28 @@ class Segment34View extends WatchUi.WatchFace {
     (:LowMem)
     hidden function getCgmComplicationByLabel(targetLabel as String) as Null { return null; }
 
-    (:HighMem)
     hidden function convertCgmTrendToArrow(trend as String) as String {
-        if (trend.equals("R")) { return "a"; }  // Rapidly rising ↑
-        if (trend.equals("r")) { return "b"; }  // Rising ↗
-        if (trend.equals("n")) { return "c"; }  // Neutral →
-        if (trend.equals("d")) { return "d"; }  // Falling ↘
-        if (trend.equals("D")) { return "e"; }  // Rapidly falling ↓
+        if (trend.equals("R") || trend.equals("SingleUp") || trend.equals("DoubleUp")) { return "a"; }  // Rapidly rising ↑
+        if (trend.equals("r") || trend.equals("FortyFiveUp")) { return "b"; }  // Rising ↗
+        if (trend.equals("n") || trend.equals("Flat")) { return "c"; }  // Neutral →
+        if (trend.equals("d") || trend.equals("FortyFiveDown")) { return "d"; }  // Falling ↘
+        if (trend.equals("D") || trend.equals("SingleDown") || trend.equals("DoubleDown")) { return "e"; }  // Rapidly falling ↓
         return "";
+    }
+
+    hidden function getLocalCgmData() as String {
+        var cgmData = Storage.getValue("cgmData");
+
+        if (cgmData instanceof Dictionary) {
+            var sgv = (cgmData.get("sgv").toFloat() / 18).format("%.1f");
+            var delta = (cgmData.get("delta").toFloat() / 18).format("%.1f");
+            var arrow = convertCgmTrendToArrow(cgmData.get("direction") as String);
+            var timestamp = cgmData.get("date") as Long;
+            var ageMin = (Time.now().value() - (timestamp / 1000)) / 60;
+            return sgv + " " + arrow + " " + delta + " (" + ageMin + ")";
+        }
+
+        return "---";
     }
 
     (:HighMem)

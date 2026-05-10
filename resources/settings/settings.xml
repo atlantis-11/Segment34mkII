@@ -291,6 +291,7 @@
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
             <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="79">@Strings.settings_local_cgm_data</listEntry>
         </settingConfig>
     </setting>
 
@@ -331,6 +332,7 @@
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
             <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="79">@Strings.settings_local_cgm_data</listEntry>
         </settingConfig>
     </setting>
 
@@ -366,6 +368,7 @@
             <listEntry value="62">@Strings.settings_current_location_accuracy</listEntry>
             <listEntry value="57">@Strings.settings_next_calendar_event</listEntry>
             <listEntry value="71">@Strings.settings_cgm_glucose_trend</listEntry>
+            <listEntry value="79">@Strings.settings_local_cgm_data</listEntry>
         </settingConfig>
     </setting>
 
@@ -1175,6 +1178,10 @@
     </setting>
 
     <setting propertyKey="@Properties.zeropadHour" title="@Strings.settings_zeropad_hour_clock">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.enableLocalCgm" title="@Strings.settings_enable_local_cgm">
         <settingConfig type="boolean" />
     </setting>
 

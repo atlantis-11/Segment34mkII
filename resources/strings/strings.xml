@@ -488,4 +488,6 @@
     <string id="settings_temperature_uv_wind" scope="settings">Temperature, UV Index, Wind</string>
     <string id="settings_cgm_glucose_trend" scope="settings">CGM Glucose + Trend</string>
     <string id="settings_cgm_age" scope="settings">CGM Age (minutes)</string>
+    <string id="settings_local_cgm_data" scope="settings">Local CGM Data</string>
+    <string id="settings_enable_local_cgm" scope="settings">Enable background process that reads from local CGM server</string>
 </strings>

@@ -22,6 +22,13 @@ class Segment34App extends Application.AppBase {
     function getInitialView() {
         mView = new Segment34View();
         var delegate = new Segment34Delegate(mView);
+
+        var enableLocalCgm = Application.Properties.getValue("enableLocalCgm") as Boolean;
+
+        if (System has :ServiceDelegate && enableLocalCgm) {
+    		Background.registerForTemporalEvent(new Time.Duration(5 * 60));
+    	}
+
         return [mView, delegate];
     }
 
@@ -30,6 +37,17 @@ class Segment34App extends Application.AppBase {
         WatchUi.requestUpdate();
     }
 
+    function getServiceDelegate(){
+        return [new CgmServiceDelegate()];
+    }
+
+    function onBackgroundData(data) {
+        if (data instanceof Dictionary) {
+            if (data.get("source").equals("CGM_SERVICE")) {
+                Storage.setValue("cgmData", data.get("payload"));
+            }
+        }
+    }
 }
 
 function getApp() as Segment34App {
