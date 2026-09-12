@@ -8,7 +8,11 @@ class CgmServiceDelegate extends System.ServiceDelegate {
     }
 
     function onTemporalEvent() {
-        makeRequest("http://127.0.0.1:17580/sgv.json?brief_mode=Y&count=1");
+        try {
+            makeRequest("http://127.0.0.1:17580/sgv.json?brief_mode=Y&count=1");
+        } catch (e) {
+            Background.exit(null);
+        }
     }
 
     function makeRequest(url) as Void {
@@ -35,6 +39,7 @@ class CgmServiceDelegate extends System.ServiceDelegate {
             Background.exit(payload);
         } else {
             System.println("Could not retrive CGM data, response code: " + responseCode);
+            Background.exit(null);
         }
     }
 }
